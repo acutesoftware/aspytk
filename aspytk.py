@@ -28,8 +28,21 @@ def usage():
     print("dat.split_CSV_by_Column_Values(ipFile, 16) # creates new file from each values of column 16 from ipFile "  )
     print("")
     
-fle.TEST()
 dat.TEST()
 net.TEST()
 img.TEST()
-    
+tmpFile = fle.TEST()    
+
+ans = input("Press <Enter> to remove temp files, or <Ctrl><C> to leave files intact")
+#time.sleep(2)
+print ("Wiping temp files")
+fle.deleteFile(tmpFile)
+fle.deleteFile(tmpFile + ".html")
+fle.deleteFile("resized_sunset.jpg")
+fle.deleteFile("text_sunset.jpg")
+#fle.deleteFile("sunset.jpg")
+fle.deleteFile("contour_sunset.jpg")
+
+
+
+

@@ -9,7 +9,8 @@ from PIL import ImageFilter
 
 def TEST():
     # todo - make a jpg from desktop or something, use that as a test
-    print(" --- Testing Image functions --- ")
+    print(" \n --- Testing Image functions--- ")
+    print(" ------------------------------ ")
     fileName = GetRandomImage("sunset", 1, "")
     resize(fileName, 600, "resized_" + fileName) 
     filterContour(fileName, "contour_" + fileName)    

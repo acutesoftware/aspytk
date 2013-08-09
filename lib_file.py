@@ -6,16 +6,24 @@ import glob
 import fnmatch
 import time
 from datetime import datetime
+import lib_net as net 
 
 def TEST():
-    print(" --- Testing File functions --- ")
-    print("TODO")
- 
+    print(" \n --- Testing File functions --- ")
+    print(" ------------------------------ ")
+    tmpFile = "list_of_files.csv"
+    fl = GetFileList([os.getcwd()], ['*.py'], ["__pycache__", ".git"], True)
+    SaveFileList(fl, tmpFile, ["name", "path", "size", "date"])
+    net.FormatCsvAsHtml(tmpFile, tmpFile + ".html")
+    LaunchFile(tmpFile + ".html")
+    return tmpFile
+    
 def ensure_dir(f):
     d = os.path.dirname(f)
     if not os.path.exists(d):
         os.makedirs(d)
-
+        
+   
 def AppendToFile(fname, txt):
     with open(fname, "a") as myfile:
         myfile.write(txt)
@@ -29,7 +37,9 @@ def ConvertFileToCSV(txt_file, csv_file, delim):
     #print (in_txt)
     if in_txt != "":
         out_csv.writerows(in_txt)
-    
+
+def LaunchFile(filename):
+    os.system("start "+filename)    
 
 def wipe_dir(d):
     if d == "" or len(d) < 4:
