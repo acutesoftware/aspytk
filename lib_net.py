@@ -16,7 +16,7 @@ def CreateCssString(fontFamily, baseFontSize):
     css = css + "A:visited { color: #003399; font-size:" + baseFontSize + ";TEXT-DECORATION:none }"
     css = css + "A:hover {   color:#FF3300;TEXT-DECORATION:underline}"
     css = css + "TD {        font-size:" + baseFontSize + "; valign=top; FONT-FAMILY:Verdana; padding: 1px 2px 2px 1px;  }"
-    css = css + "H1 {        font-size:220%; padding: 1px 0px 0px 0px; margin:0px; }"
+    css = css + "H1 {        font-size:200%; padding: 1px 0px 0px 0px; margin:0px; }"
     css = css + "H2 {        font-size:160%; FONT-WEIGHT:NORMAL; margin:0px 0px 0px 0px; padding:0px; }"
     css = css + "H3 {        font-size:100%; FONT-WEIGHT:BOLD; padding:1px; letter-spacing:0.1em; }"
     css = css + "H4 {        font-size:140%; FONT-WEIGHT:NORMAL; margin:0px 0px 0px 0px; padding:1px; }"
