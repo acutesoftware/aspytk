@@ -31,17 +31,18 @@ def escape_html(s):
     res = res.replace('"', "&quot;")
     return res
 
+def BuildHTMLHeader(title, linefeed='\n'):
+    res = "<HTML><HEAD><title>" + linefeed
+    res = res + title + "</title>" + linefeed
+    res = res + "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + linefeed
+    res = res + CreateCssString("Verdana", "12pt" ) + linefeed
+    res = res + "\" /></HEAD><BODY><H1>"
+    res = res + title + "</H1><TABLE border=1>"
+    return res
+    
 def FormatCsvAsHtml(csvFile, opHTML):
     fop = open(opHTML, 'w')
-    fop.write("<HTML><HEAD><title>")
-    fop.write(csvFile)
-    fop.write("</title><link rel=\"stylesheet\" type=\"text/css\" href=\"")
-    fop.write(CreateCssString("Verdana", "12pt" ))
-    fop.write("\" /></HEAD><BODY><H1>")
-    fop.write(csvFile)
-    fop.write("</H1><TABLE border=1>")
-    
-    fop.write(csvFile)
+    fop.write(BuildHTMLHeader(csvFile))
     with open(csvFile) as csv_file:
         for row in csv.reader(csv_file, delimiter=','):
             fop.write("<TR>")
@@ -54,7 +55,8 @@ def FormatCsvAsHtml(csvFile, opHTML):
     fop.write("</BODY></HTML>")
     fop.close()
     
-    
+def DisplayImagesAsHTML(imageList):
+    pass
     
     
     

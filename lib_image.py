@@ -12,9 +12,10 @@ def TEST():
     print(" \n --- Testing Image functions--- ")
     print(" ------------------------------ ")
     fileName = GetRandomImage("sunset", 1, "")
-    resize(fileName, 600, "resized_" + fileName) 
-    filterContour(fileName, "contour_" + fileName)    
-    addTextToImage(fileName, "Stop writing on images", "text_" + fileName)
+    tempFileList = ["resized_" + fileName, "contour_" + fileName, "text_" + fileName]
+    resize(fileName, 600, tempFileList[0]) 
+    filterContour(fileName, tempFileList[1])    
+    addTextToImage(fileName, "This is a test", tempFileList[2])
 
 def GetRandomImage(searchString, searchResultPosition, baseFileName):
     # searches Google images for searchString and returns the nth value and saves to 'fileName'

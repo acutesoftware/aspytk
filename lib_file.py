@@ -56,6 +56,12 @@ def deleteFile(f):
         except:
             print("Cant delete ",f)
 
+def deleteListOfFiles(fl):
+    for f in fl:
+        print("Deleting ", f)
+        #deleteFile(f)
+
+            
 def LoadFileToList(fname):
     f = open(fname, 'r')
     l = f.read()
