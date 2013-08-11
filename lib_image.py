@@ -16,7 +16,9 @@ def TEST():
     resize(fileName, 600, tempFileList[0]) 
     filterContour(fileName, tempFileList[1])    
     addTextToImage(fileName, "This is a test", tempFileList[2])
-
+    return tempFileList
+    
+    
 def GetRandomImage(searchString, searchResultPosition, baseFileName):
     # searches Google images for searchString and returns the nth value and saves to 'fileName'
     return 'sunset.jpg'  # todo - implement this
