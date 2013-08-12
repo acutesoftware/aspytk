@@ -1,12 +1,17 @@
 # as_util_data.py 
 # functions written and collected from github and python tutorials
 # to work on datasets
+import base64
 
 def TEST():
     print(" \n --- Testing Data functions --- ")
     print(" ------------------------------ ")
-    print("TODO")
- 
+    print("Basic Text hiding (not encryption)")
+    visible_text = 'password'
+    poorly_hidden_text = encode(visible_text)  #
+    print("Visible text  = ", visible_text)
+    print("'hidden' text = ", poorly_hidden_text)
+    print("Restored text = ", decode(poorly_hidden_text) )
 
 def dict2list(dct, keylist): return [dct[i] for i in keylist]
 def list2dict(L, keylist): return {k:v for (k,v) in zip(keylist, L)}
@@ -22,6 +27,8 @@ def Dict2String(d):
 		res = res + k + ',' + str(v) + ','
 	return res
 
+def encode(visible_text): return base64.b64encode(bytes(visible_text, 'utf-8')).decode('utf-8')
+def decode(poorly_hidden_text): return base64.b64decode(poorly_hidden_text).decode('utf-8')
 
 def GetCountUniqueValues(fname, colNum, colText, topN_values, opFile):
 	cols = collections.Counter()
@@ -40,7 +47,8 @@ def GetColumnCounts(fname, colNum, colText, opFile):
 	addSampleData(opFile, colText + ': ' + str(cols[row[colNum]]))
 	
 	
-#newList = sorted(cols, key=lambda cols: cols[1])
+
+
 
 def unix_head(ipFile, opFile, numLines):
 	numRows = 0
