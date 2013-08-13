@@ -23,7 +23,6 @@ def ensure_dir(f):
     if not os.path.exists(d):
         os.makedirs(d)
         
-   
 def AppendToFile(fname, txt):
     with open(fname, "a") as myfile:
         myfile.write(txt)
@@ -153,6 +152,11 @@ def SaveFileList(filelist, opFile, opFormat, delim=','):
 
 
 
+def DownloadFileFromSharepoint(url, local_file_name):
+	# from http://stackoverflow.com/questions/2149496/downloading-a-file-protected-by-ntlm-sspi-without-prompting-for-credentials-usin
+	# you need to run this on Windows probably, and import ctypes
+	ctypes.windll.urlmon.URLDownloadToFileA(0,url,local_file_name,0,0)
+	print("Finished downloading ", local_file_name)
 
 
 
