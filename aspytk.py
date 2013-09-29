@@ -6,6 +6,7 @@ import lib_file as fle      # file / folder functions
 import lib_data as dat      # basic data processing functions
 import lib_net as net       # network / web scraping functions
 import lib_image as img     # image processing utils
+import lib_math as mth      # basic maths functions
 #import lib_acute as acu     # sample applications using this lib
 #import lib_time as tme      # timer utilities
 #import lib_date as dte      # date calculation functions
@@ -30,7 +31,7 @@ def usage():
 
 
 
-    
+mth.TEST()    
 dat.TEST()
 net.TEST()
 lstFiles = img.TEST()
