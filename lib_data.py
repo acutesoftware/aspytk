@@ -2,6 +2,10 @@
 # functions written and collected from github and python tutorials
 # to work on datasets
 import base64
+import csv
+import collections
+import random
+
 
 def TEST():
     print(" \n --- Testing Data functions --- ")
@@ -22,6 +26,12 @@ def List2String(l):
 	return res
 
 def Dict2String(d):
+	res = ","
+	for k, v in d: # .iteritems():
+		res = res + k + str(v) + ','
+	return res
+
+def Dict2String_ORIG(d):
 	res = ","
 	for k, v in d: # .iteritems():
 		res = res + k + ',' + str(v) + ','
@@ -46,9 +56,6 @@ def GetColumnCounts(fname, colNum, colText, opFile):
 	print (colText, ': %s' % cols[row[colNum]])  # this is wrong
 	addSampleData(opFile, colText + ': ' + str(cols[row[colNum]]))
 	
-	
-
-
 
 def unix_head(ipFile, opFile, numLines):
 	numRows = 0
@@ -77,7 +84,7 @@ def getPercentRandomRecords(ipFile, opFile, percent):
 		totRows = totRows + 1
 		if totRows == 1:	# write header to output
 			op.write(line)
-		if randint(0,100) < percent :
+		if random.randint(0,100) < percent :
 			op.write(line)
 			numRows = numRows + 1
 	print("Wrote ",numRows, " out of ", totRows)
@@ -133,6 +140,13 @@ def ReadFileToList(fname, dataStartsAtRow = 2):
     #print (lines)
     return lines
 
+def SaveListToFile(L, fname):
+    f = open(fname, 'w')
+    for item in L:
+        f.write("%s\n" % item)
+    f.close()
+     
+    
 def load_csv(fname, header_row=0, first_data_row=None,
              types=None, **kwargs):
     """Load a CSV file into a dictionary.

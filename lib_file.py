@@ -110,6 +110,50 @@ def GetFileList(lstPaths, lstXtn, lstExcluded, VERBOSE = False):
     print("Found ", numFiles, " files")
     return opFileList
 
+def GetFolderSizes(rootPath, opFile, printDetails = True):
+    numFiles = 0
+    numPaths = 0
+    totSize = 0
+    fileSize = 0
+    deleteFile(opFile)
+    print('\n Checking folder - ', rootPath, '\n')
+    for root, subFolders, baseNames in os.walk(rootPath):
+        for folder in subFolders:
+            filePath = os.path.join(root, folder)
+            #print (" -- %s" % ( filePath))
+            numPaths = numPaths + 1
+            res = GetFileSizes(filePath, False)
+            AppendToFile(opFile, res)
+    res = GetFileSizes(rootPath, False)  # now get the root files and total size
+    AppendToFile(opFile, res)
+    
+def GetFileSizes(rootPath, printDetails = True):
+    numFiles = 0
+    numPaths = 0
+    totSize = 0
+    fileSize = 0
+    for root, subFolders, baseNames in os.walk(rootPath):
+        for folder in subFolders:
+            #print ("%s has subdirectory %s" % (root, folder))
+            numPaths = numPaths + 1
+            #GetFileSizes(rootPath, False)
+        for shortNames in baseNames:
+            filename = os.path.join(root, shortNames) 
+            filePath = os.path.join(root, filename)
+            fileSize = os.path.getsize(filename)
+            #print('baseNames= ' ,baseNames)
+            #print('filename = ' + filename)
+            #print('fileSize = ' + str(fileSize))
+            if printDetails:
+                print(filename, '\t', fileSize)
+            numFiles = numFiles + 1
+            totSize = totSize + fileSize
+            
+    #print ('Total Paths = ', str(numPaths))
+    result = rootPath + ',' + str(numPaths) + ',' + str(numFiles) + ',' + str(totSize) + '\n'       
+    print (result)
+    return result
+    
 def TestFileList():
     # function to test the file list functions
     lstPaths = [r"C:\user\dev\src\python\AI", r"C:\user\dev\src\python\gfx" ]
@@ -121,6 +165,10 @@ def TestFileList():
 def GetDateAsString(t):
     return str(datetime.fromtimestamp(t).strftime("%Y-%m-%d %H:%M:%S"))
         
+def TodayAsString():	# returns current date and time like oracle
+#	return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+	return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+	
     
     
 def SaveFileList(filelist, opFile, opFormat, delim=','):
