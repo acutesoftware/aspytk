@@ -25,7 +25,11 @@ def TEST():
     print('Q = Test to see if sequence is Geometric')
     isSequenceGeometric([2,-10,40,-200,1000,-5000])
     isSequenceGeometric([1,-4,16,-64,256,-1024])
-
+    isSequenceArithmetic([3,5,0,6,10,13]) 
+    isSequenceArithmetic([3,4,9,11,17,16]) 
+    isSequenceArithmetic([3,1,4,8,13,17]) 
+    isSequenceArithmetic([3,4,10,8,11,17]) 
+    isSequenceArithmetic([3,8,12,13,18,23]) 
     
     
 def evalFunction(formula, x, y, z, verbose = 'verbose'):
@@ -106,8 +110,8 @@ def isSequenceGeometric(seq, showCalculations='N'):
 
 def isSequenceArithmetic(seq, showCalculations='N'):
     # takes a list of numbers and determines it has
-    # the same diff of all elements, making it geometric
-    #print('checking to see if sequence is geometric - ', seq)
+    # the same diff of all elements, making it arithmetic
+    #print('checking to see if sequence is arithmetic - ', seq)
     diff = 1
     sumDiff = 0
     numElements = 1
@@ -134,7 +138,9 @@ def isSequenceArithmetic(seq, showCalculations='N'):
         print('Sequence ', seq, ' is NOT Arithmetic')
         return 0
 
-
-
+def evaluateSeriesGeometric(seq, n):
+    # evalute a series where n=n
+    # e.g. Evaluate ?n=4 (-5/6)n.
+    pass
 
         
