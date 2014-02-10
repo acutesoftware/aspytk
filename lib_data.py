@@ -1,11 +1,11 @@
-# as_util_data.py 
+# lib_data.py 
 # functions written and collected from github and python tutorials
 # to work on datasets
 import base64
 import csv
 import collections
 import random
-
+import re
 
 def TEST():
     print(" \n --- Testing Data functions --- ")
@@ -39,6 +39,9 @@ def Dict2String_ORIG(d):
 
 def encode(visible_text): return base64.b64encode(bytes(visible_text, 'utf-8')).decode('utf-8')
 def decode(poorly_hidden_text): return base64.b64decode(poorly_hidden_text).decode('utf-8')
+
+def StriptHTMLtags(txt):
+    return re.sub('<[^<]+?>', '', txt)
 
 def GetCountUniqueValues(fname, colNum, colText, topN_values, opFile):
 	cols = collections.Counter()

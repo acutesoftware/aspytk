@@ -143,4 +143,6 @@ def evaluateSeriesGeometric(seq, n):
     # e.g. Evaluate ?n=4 (-5/6)n.
     pass
 
+    
+    
         

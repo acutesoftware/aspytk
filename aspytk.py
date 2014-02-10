@@ -5,7 +5,7 @@
 import lib_file as fle      # file / folder functions
 import lib_data as dat      # basic data processing functions
 import lib_net as net       # network / web scraping functions
-import lib_image as img     # image processing utils
+#import lib_image as img     # image processing utils
 import lib_math as mth      # basic maths functions
 #import lib_acute as acu     # sample applications using this lib
 #import lib_time as tme      # timer utilities
@@ -30,19 +30,24 @@ def usage():
     print("")
 
 
+fle.GetFolderSizes('S:\\DATA', 'S_DATA.csv', False)
+fle.GetFolderSizes('P:\\', 'P_photos.csv', False)
 
+#fle.GetFolderSizes('P:\\__Downloads\\z', 'autodownload.csv', False)
+#fle.GetFolderSizes('P:\\garden', 'garden_photos.csv', False)
+#fle.GetFolderSizes('T:\\user\\dev\\src\\python', 'python_src.csv', False)
+# works for one folder - fle.GetFileSizes('S://duncan//C//user//dev//src//python//ext-dl', False)
+stop
 mth.TEST()    
 dat.TEST()
 net.TEST()
-lstFiles = img.TEST()
+#lstFiles = img.TEST()
 tmpFile = fle.TEST()    
 
 ans = input("Press <Enter> to remove temp files, or <Ctrl><C> to leave files intact")
-#time.sleep(2)
 print ("Wiping temp files")
 fle.deleteFile(tmpFile)
-fle.deleteListOfFiles(lstFiles)
-
+#fle.deleteListOfFiles(lstFiles)
 
 
 
