@@ -3,6 +3,7 @@
 # to work on datasets
 import base64
 import csv
+import sys
 import collections
 import random
 import re
@@ -37,6 +38,19 @@ def Dict2String_ORIG(d):
 		res = res + k + ',' + str(v) + ','
 	return res
 
+def ForceToString(unknown):
+	result = ''
+	if type(unknown) is str:
+		result = unknown
+	if type(unknown) is int:
+		result = str(unknown)
+	if type(unknown) is dict:
+		result = Dict2String(unknown)
+	if type(unknown) is list:
+		result = List2String(unknown)
+	
+	return result
+	
 def encode(visible_text): return base64.b64encode(bytes(visible_text, 'utf-8')).decode('utf-8')
 def decode(poorly_hidden_text): return base64.b64decode(poorly_hidden_text).decode('utf-8')
 
@@ -148,7 +162,11 @@ def SaveListToFile(L, fname):
     for item in L:
         f.write("%s\n" % item)
     f.close()
-     
+   
+def print_no_newline(string):
+	sys.stdout.write(string)
+	sys.stdout.flush()  
+
     
 def load_csv(fname, header_row=0, first_data_row=None,
              types=None, **kwargs):

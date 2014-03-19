@@ -3,6 +3,8 @@
 
 import csv
 import urllib.request
+import getpass
+import socket
 
 def main():
 	TEST()
@@ -15,6 +17,12 @@ def TEST():
 	print('downloading file http://gdeltproject.org/data/lookups/CAMEO.country.txt to test_country.txt')
 	DownloadFile('http://gdeltproject.org/data/lookups/CAMEO.country.txt', 'test_country.txt')
 	print('done')
+
+def GetUserName():
+	return getpass.getuser()
+
+def GetHostName():
+	return socket.gethostname()
 	
 def DownloadFile(url, filename):
 	output = open(filename,'wb')
