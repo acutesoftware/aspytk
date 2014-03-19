@@ -2,13 +2,25 @@
 # utility functions for HTML work, mainly from udacity course
 
 import csv
+import urllib.request
 
+def main():
+	TEST()
+	
 def TEST():
-    print(" \n --- Testing Net functions  --- ")
-    print(" ------------------------------ ")
-    print(escape_html("hi there"))
-    print(escape_html("hi <t>here"))
-
+	print(" \n --- Testing Net functions  --- ")
+	print(" ------------------------------ ")
+	print(escape_html("hi there"))
+	print(escape_html("hi <t>here"))
+	print('downloading file http://gdeltproject.org/data/lookups/CAMEO.country.txt to test_country.txt')
+	DownloadFile('http://gdeltproject.org/data/lookups/CAMEO.country.txt', 'test_country.txt')
+	print('done')
+	
+def DownloadFile(url, filename):
+	output = open(filename,'wb')
+	output.write(urllib.request.urlopen(url).read())
+	output.close()
+	
 def CreateCssString(fontFamily, baseFontSize):
     css = "<STYLE>"
     css = css + "BODY {      font-size:" + baseFontSize + "; FONT-FAMILY:" + fontFamily + "; }"
@@ -58,5 +70,7 @@ def FormatCsvAsHtml(csvFile, opHTML):
 def DisplayImagesAsHTML(imageList):
     pass
     
-    
+	
+if __name__ == '__main__':
+    main()	    
     

@@ -171,7 +171,7 @@ def TodayAsString():	# returns current date and time like oracle
 	
     
     
-def SaveFileList(filelist, opFile, opFormat, delim=','):
+def SaveFileList(filelist, opFile, opFormat, delim=',', qu='"'):
     # written by Duncan Murray 7/8/2013 (C) Acute Software
     # uses a List of files and collects meta data on them and saves 
     # to an text file as a list or with metadata depending on opFormat.
@@ -183,19 +183,20 @@ def SaveFileList(filelist, opFile, opFormat, delim=','):
         fout.write('\n')    
         #Print all file data
         for f in filelist:
-            line = f + ","
+            line = qu + f + qu + delim
             for fld in opFormat:
                 if fld == "name":
-                    line = line + os.path.basename(f) + delim
+                    line = line + qu + os.path.basename(f) + qu + delim
                 if fld == "date":
-                    line = line + GetDateAsString(os.path.getmtime(f)) + delim # str(datetime.fromtimestamp(modifiedTime).strftime("%Y%m%b %H:%M:%S"))
+                    line = line + qu + GetDateAsString(os.path.getmtime(f)) + qu + delim # str(datetime.fromtimestamp(modifiedTime).strftime("%Y%m%b %H:%M:%S"))
                 if fld == "size":
-                    line = line + str(os.path.getsize(f)) + delim
+                    line = line + qu + str(os.path.getsize(f)) + qu + delim
                 if fld == "path":
-                    line = line + os.path.dirname(f) + delim
+                    line = line + qu + os.path.dirname(f) + qu + delim
                     
             #line = os.path.basename(f) + ',' + str(os.path.getsize(f)) + ',' + f + '\n'
             fout.write (line + '\n')
+            #print(line)
         print ("Finished saving " , opFile)
 
 

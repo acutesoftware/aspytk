@@ -30,14 +30,14 @@ def usage():
     print("")
 
 
-fle.GetFolderSizes('S:\\DATA', 'S_DATA.csv', False)
-fle.GetFolderSizes('P:\\', 'P_photos.csv', False)
+#fle.GetFolderSizes('S:\\DATA', 'S_DATA.csv', False)
+#fle.GetFolderSizes('P:\\', 'P_photos.csv', False)
 
 #fle.GetFolderSizes('P:\\__Downloads\\z', 'autodownload.csv', False)
 #fle.GetFolderSizes('P:\\garden', 'garden_photos.csv', False)
 #fle.GetFolderSizes('T:\\user\\dev\\src\\python', 'python_src.csv', False)
 # works for one folder - fle.GetFileSizes('S://duncan//C//user//dev//src//python//ext-dl', False)
-stop
+#stop
 mth.TEST()    
 dat.TEST()
 net.TEST()
