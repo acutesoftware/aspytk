@@ -115,6 +115,17 @@ def addSampleData(fname, content):
 	wr = csv.writer(open(fname, 'at'), quoting=csv.QUOTE_ALL, lineterminator='\n')
 	wr.writerow(content)
 
+
+def remove_duplicates(l):
+    new_list = []
+    for elem in l:
+        if elem not in new_list:
+            new_list.append(elem)
+
+    return new_list
+    #return list(set(l))   # this is pythonic way to do it for non nested list
+	
+	
 def split_CSV_by_Column_names(inputfilename):  # TOK
 	with open(inputfilename, 'rb') as inf:
 		inrd = csv.reader(inf)
