@@ -98,6 +98,9 @@ def wipe_dir(d):
     else:
         shutil.rmtree(d)
 
+def GetShortFileName(filePath):
+	return os.path.basename(filePath)
+		
 def deleteFile(f):
     if f == "":
         pass
