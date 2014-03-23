@@ -133,37 +133,37 @@ def _glob(path, *exts):
 
     
 def GetFileList(lstPaths, lstXtn, lstExcluded, VERBOSE = False):
-    # written by Duncan Murray 7/8/2013 (C) Acute Software
-    # builds a list of files and returns as a list 
-    if VERBOSE:
-        print("Generating list of Files...")
-        print("Paths = ", lstPaths)
-        print("Xtns  = ", lstXtn)
-        print("exclude = ", lstExcluded)
-    numFiles = 0    
-    opFileList = []
-    for rootPath in lstPaths:
-        if VERBOSE:
-            print(rootPath)
-        for root, dirs, files in os.walk(rootPath):
-            for basename in files:
-                for xtn in lstXtn:
-                    if fnmatch.fnmatch(basename, xtn):
-                        filename = os.path.join(root, basename)
-                        includeThisFile = "Y"
-                        #print ("filename = ", filename, " Exlude = ", lstExcluded)
-                        if len(lstExcluded) > 0:
-                            for exclude in lstExcluded:
-                                if filename.find(exclude) != -1:
-                                    includeThisFile = "N"
-                        if includeThisFile == "Y":
-                            if VERBOSE:
-                                print(os.path.basename(filename), '\t', os.path.getsize(filename))
-                            numFiles = numFiles + 1
-                            opFileList.append( filename)
-                        
-    print("Found ", numFiles, " files")
-    return opFileList
+	# written by Duncan Murray 7/8/2013 (C) Acute Software
+	# builds a list of files and returns as a list 
+	if VERBOSE:
+		print("Generating list of Files...")
+		print("Paths = ", lstPaths)
+		print("Xtns  = ", lstXtn)
+		print("exclude = ", lstExcluded)
+	numFiles = 0    
+	opFileList = []
+	for rootPath in lstPaths:
+		if VERBOSE:
+			print(rootPath)
+		for root, dirs, files in os.walk(rootPath):
+			for basename in files:
+				for xtn in lstXtn:
+					if fnmatch.fnmatch(basename, xtn):
+						filename = os.path.join(root, basename)
+						includeThisFile = "Y"
+						#print ("filename = ", filename, " Exlude = ", lstExcluded)
+						if len(lstExcluded) > 0:
+							for exclude in lstExcluded:
+								if filename.find(exclude) != -1:
+									includeThisFile = "N"
+						if includeThisFile == "Y":
+							if VERBOSE:
+								print(os.path.basename(filename), '\t', os.path.getsize(filename))
+							numFiles = numFiles + 1
+							opFileList.append( filename)
+	if VERBOSE:
+		print("Found ", numFiles, " files")
+	return opFileList
 
 def GetFolderSizes(rootPath, opFile, printDetails = True):
     numFiles = 0
