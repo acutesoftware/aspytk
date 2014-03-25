@@ -29,18 +29,18 @@ def DownloadFile(url, filename):
 	output.write(urllib.request.urlopen(url).read())
 	output.close()
 	
-def CreateCssString(fontFamily, baseFontSize):
-    css = "<STYLE>"
-    css = css + "BODY {      font-size:" + baseFontSize + "; FONT-FAMILY:" + fontFamily + "; }"
-    css = css + "A:link {    font-size:" + baseFontSize + "; COLOR: blue;TEXT-DECORATION:none}"
-    css = css + "A:visited { color: #003399; font-size:" + baseFontSize + ";TEXT-DECORATION:none }"
-    css = css + "A:hover {   color:#FF3300;TEXT-DECORATION:underline}"
-    css = css + "TD {        font-size:" + baseFontSize + "; valign=top; FONT-FAMILY:Verdana; padding: 1px 2px 2px 1px;  }"
-    css = css + "H1 {        font-size:200%; padding: 1px 0px 0px 0px; margin:0px; }"
-    css = css + "H2 {        font-size:160%; FONT-WEIGHT:NORMAL; margin:0px 0px 0px 0px; padding:0px; }"
-    css = css + "H3 {        font-size:100%; FONT-WEIGHT:BOLD; padding:1px; letter-spacing:0.1em; }"
-    css = css + "H4 {        font-size:140%; FONT-WEIGHT:NORMAL; margin:0px 0px 0px 0px; padding:1px; }"
-    css = css + "</STYLE>"
+def CreateCssString(fontFamily, baseFontSize, linefeed='\n'):
+    css = "<STYLE>" + linefeed
+    css = css + "BODY {      font-size:" + baseFontSize + "; FONT-FAMILY:" + fontFamily + "; }" + linefeed
+    css = css + "A:link {    font-size:" + baseFontSize + "; COLOR: blue;TEXT-DECORATION:none}" + linefeed
+    css = css + "A:visited { color: #003399; font-size:" + baseFontSize + ";TEXT-DECORATION:none }" + linefeed
+    css = css + "A:hover {   color:#FF3300;TEXT-DECORATION:underline}" + linefeed
+    css = css + "TD {        font-size:" + baseFontSize + "; valign=top; FONT-FAMILY:Arial; padding: 1px 2px 2px 1px;  }" + linefeed
+    css = css + "H1 {        font-size:200%; padding: 1px 0px 0px 0px; margin:0px; }" + linefeed
+    css = css + "H2 {        font-size:160%; FONT-WEIGHT:NORMAL; margin:0px 0px 0px 0px; padding:0px; }" + linefeed
+    css = css + "H3 {        font-size:100%; FONT-WEIGHT:BOLD; padding:1px; letter-spacing:0.1em; }" + linefeed
+    css = css + "H4 {        font-size:140%; FONT-WEIGHT:NORMAL; margin:0px 0px 0px 0px; padding:1px; }" + linefeed
+    css = css + "</STYLE>" + linefeed
     return css
     
 def escape_html(s):
@@ -51,14 +51,24 @@ def escape_html(s):
     res = res.replace('"', "&quot;")
     return res
 
-def BuildHTMLHeader(title, linefeed='\n'):
+def BuildHTMLHeader(title, linefeed='\n', border='1'):
     res = "<HTML><HEAD><title>" + linefeed
     res = res + title + "</title>" + linefeed
-    res = res + "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + linefeed
-    res = res + CreateCssString("Verdana", "12pt" ) + linefeed
-    res = res + "\" /></HEAD><BODY><H1>"
-    res = res + title + "</H1><TABLE border=1>"
+    #res = res + "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + linefeed
+    res = res + CreateCssString("Arial", "10pt", linefeed ) + linefeed
+#    res = res + "\" /></HEAD><BODY><H1>"
+    res = res + "</HEAD><BODY><H1>"
+    res = res + title + "</H1><TABLE border=" + border + ">"
     return res
+
+def FormatListAsHTMLTableRow(lst):
+	txt = '<TR>'
+	for i in lst:
+		txt = txt + '<TD>' + i + '</TD>'
+	txt = txt + '</TR>'	
+	print(lst)
+	print('txt = ' + txt)
+	return txt
     
 def FormatCsvAsHtml(csvFile, opHTML):
     fop = open(opHTML, 'w')
