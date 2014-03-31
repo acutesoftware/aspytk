@@ -100,7 +100,10 @@ def wipe_dir(d):
 
 def GetShortFileName(filePath):
 	return os.path.basename(filePath)
-		
+
+def GetFileSize(filePath):
+	return os.path.getsize(filePath)
+	
 def deleteFile(f):
     if f == "":
         pass
@@ -218,8 +221,13 @@ def TestFileList():
     SaveFileList(fl, "filelist-test.csv", ["name", "path", "size", "date"])
     
 def GetDateAsString(t):
-    return str(datetime.fromtimestamp(t).strftime("%Y-%m-%d %H:%M:%S"))
-        
+	res = ''
+	try:
+		res = str(datetime.fromtimestamp(t).strftime("%Y-%m-%d %H:%M:%S"))
+	except:
+		pass
+	return res     
+	
 def TodayAsString():	# returns current date and time like oracle
 #	return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
 	return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
