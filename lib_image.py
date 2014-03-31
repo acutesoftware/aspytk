@@ -1,6 +1,7 @@
 # as_image.py   written by Duncan Murray 6/7/2013 (C) Acute Software
 # Acute Software library of functions for image manipulation
 
+
 import PIL
 from PIL import Image
 from PIL import ImageDraw
@@ -36,7 +37,7 @@ def resize(fname, basewidth, opFilename):
     
     
 def addTextToImage(fname, txt, opFilename):
-    ft = ImageFont.load("C://user//dev//src//python//_AS_LIB//timR24.pil")  # Font - google name and download
+    ft = ImageFont.load("T://user//dev//src//python//aspytk//timR24.pil")  # Font - google name and download
     wh = ft.getsize(txt)
     print("Adding text '", txt, "' to", fname)
     im = Image.open(fname)
@@ -70,4 +71,8 @@ def DetectFace(fname, opFile):
     if detected:
         for face in detected:
             print (face)
+
+if __name__ == '__main__':
+    TEST()	
+	
             
