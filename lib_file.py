@@ -103,6 +103,9 @@ def GetShortFileName(filePath):
 
 def GetFileSize(filePath):
 	return os.path.getsize(filePath)
+
+def GetPath(fileName):
+	return os.path.dirname(fileName)
 	
 def deleteFile(f):
     if f == "":
@@ -123,6 +126,15 @@ def LoadFileToList(fname):
     f = open(fname, 'r')
     l = f.read()
     return l
+            
+def LoadFileToDict(fname):
+	d = {}
+	with open(fname) as f:
+		for line in f:
+			print (line)
+			(key, val) = line.split()
+			d[int(key)] = val
+	return d
             
             
 def _glob(path, *exts):
