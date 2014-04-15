@@ -12,26 +12,30 @@ from math import *
 import parser
 
 def TEST():
-    print(' ------ SELF TEST OF CALCULUS FUNCTIONS -------')
-    print('Q = If the line y=-3x+2 is tangent to f(x) at x=-4, find f(-4)')
-    print('A = ', evalSingleVariableFunction('(-3*n)+2', -4, 'hide'))
+	print(' ------ SELF TEST OF CALCULUS FUNCTIONS -------')
+	print('Q = If the line y=-3x+2 is tangent to f(x) at x=-4, find f(-4)')
+	print('A = ', evalSingleVariableFunction('(-3*n)+2', -4, 'hide'))
 
-    print('Q = Find the limit of x->inf, x / ( ((x**2) + 1)**0.5)')
-    findLimit('n / ( ((n**2) + 1)**0.5)', 'NOT verbose' )
+	print('Q = Find the limit of x->inf, x / ( ((x**2) + 1)**0.5)')
+	findLimit('n / ( ((n**2) + 1)**0.5)', 'NOT verbose' )
 
-    print('Q = Test to see if sequence is arithmetic')
-    isSequenceArithmetic([1,6,11,16,21,26]) 
-    isSequenceArithmetic([3,5,8,10,12,14]) 
-    print('Q = Test to see if sequence is Geometric')
-    isSequenceGeometric([2,-10,40,-200,1000,-5000])
-    isSequenceGeometric([1,-4,16,-64,256,-1024])
-    isSequenceArithmetic([3,5,0,6,10,13]) 
-    isSequenceArithmetic([3,4,9,11,17,16]) 
-    isSequenceArithmetic([3,1,4,8,13,17]) 
-    isSequenceArithmetic([3,4,10,8,11,17]) 
-    isSequenceArithmetic([3,8,12,13,18,23]) 
-    
-    
+	print('Q = Test to see if sequence is arithmetic')
+	isSequenceArithmetic([1,6,11,16,21,26]) 
+	isSequenceArithmetic([3,5,8,10,12,14]) 
+	print('Q = Test to see if sequence is Geometric')
+	isSequenceGeometric([2,-10,40,-200,1000,-5000])
+	isSequenceGeometric([1,-4,16,-64,256,-1024])
+	isSequenceArithmetic([3,5,0,6,10,13]) 
+	isSequenceArithmetic([3,4,9,11,17,16]) 
+	isSequenceArithmetic([3,1,4,8,13,17]) 
+	isSequenceArithmetic([3,4,10,8,11,17]) 
+	isSequenceArithmetic([3,8,12,13,18,23]) 
+	print('mean of 1,2,3 = ', mean([1,2,3]))
+	print('mean of 1,2,4 = ', mean([1,2,4]))
+	print('mean of 979.8, 111.5, 823.015, 555.55 = ', mean([979.04,111.2,823.3323, 555.55]))
+
+
+
 def evalFunction(formula, x, y, z, verbose = 'verbose'):
     try:
         code = parser.expr(formula).compile()
@@ -143,6 +147,27 @@ def evaluateSeriesGeometric(seq, n):
     # e.g. Evaluate ?n=4 (-5/6)n.
     pass
 
-    
-    
+
+def mean(lst):
+	if len(lst) == 0:
+		return 0
+	else:
+		return float(sum(lst))/len(lst)
+
+def variance(lst):
+	if len(lst) == 0:
+		return 0
+	else:
+		return mean(lambda lst: map(lambda y: (y - mean(lst)) ** 2, lst)		)
+		
+def stddev(lst):
+	if len(lst) == 0:
+		return 0
+	else:
+		return lambda lst: math.sqrt(mean(variance(lst)))		
+
+		
+if __name__ == '__main__':
+    TEST()	
+			
         
