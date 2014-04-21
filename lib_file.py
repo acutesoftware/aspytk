@@ -22,7 +22,10 @@ def ensure_dir(f):
     d = os.path.dirname(f)
     if not os.path.exists(d):
         os.makedirs(d)
-        
+ 
+def does_file_exist(f):
+	return os.path.isfile(f)
+ 
 def AppendToFile(fname, txt):
     with open(fname, "a") as myfile:
         myfile.write(txt)
@@ -72,6 +75,8 @@ def log(fname, txt, prg=''):
 	dte = TodayAsString()
 	usr = net.GetUserName()
 	hst = net.GetHostName()
+	ensure_dir(os.path.dirname(fname))
+
 	if prg == '':
 		prg = GetModuleName()  # note - if you do this here it always returns 'AIKIF_utils.LogCommand'
 	logEntry = q + dte + q + delim + q + usr + q + delim + q + hst + q + delim + q + prg + q + delim + q + txt + q + delim + '\n'
