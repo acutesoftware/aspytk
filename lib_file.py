@@ -280,7 +280,52 @@ def SaveFileList(filelist, opFile, opFormat, delim=',', qu='"'):
         print ("Finished saving " , opFile)
 
 
+def ExtractHeader(f):
+	rows = []
+	colHeaders = []
+	import collections
+	cols = collections.Counter()
+	rowNum = 1
+	if f[-4:].lower() != '.csv':
+		print (' cant read ', f)
+		return [], -1, -1
+	with open(f) as input_file:
+		for row in csv.reader(input_file, delimiter=','):
+			if rowNum == 1:
+				for c in row:
+					colHeaders.append(c)
+			rowNum = rowNum + 1
+	return colHeaders, len(colHeaders), rowNum
 
+def SaveDictionaryFileList(opFile, filelist, delim, opFormat):
+	with open(opFile,'w') as fout:
+		for colHeading in opFormat:
+			fout.write(colHeading + delim)
+		fout.write('\n')    
+		for f in filelist:
+			line = ''
+			try:
+				rows = str(f["numRows"])
+				cols = str(f["numCols"])
+			except:
+				rows = ''
+				cols = ''
+			line = line + f["fullFileName"] + delim
+			line = line + f["name"] + delim
+			line = line + f["folder"] + delim
+			line = line + f["date"] + delim # str(datetime.fromtimestamp(modifiedTime).strftime("%Y%m%b %H:%M:%S"))
+			line = line + f["size"] + delim
+			line = line + rows + delim
+			line = line + cols + delim
+			if f["colHeadings"] is not None:
+				for itm in f["colHeadings"]:
+					line = line + itm + '; ' 
+			line = line + delim 
+			fout.write (line + '\n')
+		print ("Finished saving " , opFile)
+
+		
+		
 def DownloadFileFromSharepoint(url, local_file_name):
 	# from http://stackoverflow.com/questions/2149496/downloading-a-file-protected-by-ntlm-sspi-without-prompting-for-credentials-usin
 	# you need to run this on Windows probably, and import ctypes
