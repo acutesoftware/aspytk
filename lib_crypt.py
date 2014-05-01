@@ -15,6 +15,9 @@
 import random
 import math
 import binascii
+import string
+import sys
+print(sys.version)
 
 try:
 	from Crypto.Cipher import AES
@@ -25,14 +28,30 @@ def TEST():
 	print('lib_crypt.py - misc functions for ciphers, encryptions, translators')
 	ASCII_chart()
 	txt = 'hi there'
-	test_base64(txt)
+	#test_base64(txt)
 	test_crypto(txt)
-
+	print('reverse = ' + reverse(txt))
+	print('reverse2= ' + reverse_slow(txt))
+	test_caeser(txt)
+	
+		
 def test_base64(msg):
 	bin = txt2bin(msg)
 	print('encoding base 64 : ' + msg + '\nbin = ' + bin)
 	reCoded = bin2txt(bin)
 	print('decoding base 64 : ' + reCoded)
+
+def test_caeser(txt):
+	print(sys.version[0:2])
+	if sys.version[0:2] == '2.':
+		print(caesar(txt, 0))
+		print(caesar(txt, 1))
+		print(caesar(txt, 2))
+	else:
+		print('Running alternate caeser function Python 3.3')
+		for i in range(0,27):
+			res = caeser2(txt, i)
+			print(res)
 	
 def test_crypto(msg):
 	try:
@@ -46,10 +65,30 @@ def test_crypto(msg):
 		print('encryption test failed')
 
 	
-def encode64(visible_text): return base64.b64encode(bytes(visible_text, 'utf-8')).decode('utf-8')
+def encode64(visible_text): return base64.b64encode(bytes(visible_text, 'utf-8')).decode('utf-8')  # requires Python 3.3
 def decode64(poorly_hidden_text): return base64.b64decode(poorly_hidden_text).decode('utf-8')
+def reverse(txt): return txt[::-1]  # http://stackoverflow.com/questions/931092/reverse-a-string-in-python
+def reverse_slow(txt): return ''.join(reversed(txt))
 
+def caesar(msg, shift):
+	# requires Python 2.7
+	letters = string.ascii_lowercase
+	shuffled = letters[shift:] + letters[:shift]
+	table = string.maketrans(letters, shuffled)  # string.
+	return msg.translate(table)
 
+	
+def caeser2(msg, shift):
+	cipherText = ""
+	for ch in msg:
+		if ch.isalpha():
+			stayInAlphabet = ord(ch) + shift 
+			if stayInAlphabet > ord('z'):
+				stayInAlphabet -= 26
+			finalLetter = chr(stayInAlphabet)
+			cipherText += finalLetter
+	return cipherText
+	
 def encrypt_AES(key, plain_text, IV456):
 	obj = AES.new(key, AES.MODE_CBC, IV456)
 	return obj.encrypt(plain_text)
