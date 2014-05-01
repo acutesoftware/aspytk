@@ -28,13 +28,16 @@ def TEST():
 	print('lib_crypt.py - misc functions for ciphers, encryptions, translators')
 	ASCII_chart()
 	txt = 'hi there'
+	sentence = 'the quick brown fox jumped over the lazy dog'
 	#test_base64(txt)
 	test_crypto(txt)
 	print('reverse = ' + reverse(txt))
 	print('reverse2= ' + reverse_slow(txt))
 	test_caeser(txt)
-	
-		
+	print(sentence)
+	print(jumble_words(sentence))
+
+
 def test_base64(msg):
 	bin = txt2bin(msg)
 	print('encoding base 64 : ' + msg + '\nbin = ' + bin)
@@ -69,6 +72,16 @@ def encode64(visible_text): return base64.b64encode(bytes(visible_text, 'utf-8')
 def decode64(poorly_hidden_text): return base64.b64decode(poorly_hidden_text).decode('utf-8')
 def reverse(txt): return txt[::-1]  # http://stackoverflow.com/questions/931092/reverse-a-string-in-python
 def reverse_slow(txt): return ''.join(reversed(txt))
+
+
+def jumble_words(txt):
+	words = txt.split(' ')
+	for i in range(0,200):
+		pos1 = random.randint(0, len(words)-1)
+		pos2 = random.randint(0, len(words)-1)
+		words[pos1], words[pos2] = words[pos2], words[pos1] 
+	return ' '.join(w for w in words)
+
 
 def caesar(msg, shift):
 	# requires Python 2.7
