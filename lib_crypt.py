@@ -3,11 +3,17 @@
 # functions for various ciphers, encryptions, translators
 
 """
-010000100110010100100000011100110111010101110010011001
-010010000001110100011011110010000001100100011100100110
-100101101110011010110010000001111001011011110111010101
-110010001000000100111101110110011000010110110001110100
-01101001011011100110010100101110
+OUTPUT
+encode64 : hi there
+binary   : 0b110100001101001001000000111010001101000011001010111001001100101
+decode64 : hi there
+reverse  : ereht ih
+reverse2 : ereht ih
+caeser   : hi there shifted 0 = hithere
+caeser   : hi there shifted 1 = ijuifsf
+caeser   : hi there shifted 2 = jkvjgtg
+sentence : the quick brown fox jumped over the lazy dog
+jumbled  : dog over brown the fox lazy quick jumped the
 
 
 """
@@ -17,7 +23,6 @@ import math
 import binascii
 import string
 import sys
-print(sys.version)
 
 try:
 	from Crypto.Cipher import AES
@@ -29,32 +34,29 @@ def TEST():
 	ASCII_chart()
 	txt = 'hi there'
 	sentence = 'the quick brown fox jumped over the lazy dog'
-	#test_base64(txt)
 	test_crypto(txt)
-	print('reverse = ' + reverse(txt))
-	print('reverse2= ' + reverse_slow(txt))
+	test_base64(txt)
+	print('reverse  : ' + reverse(txt))
+	print('reverse2 : ' + reverse_slow(txt))
 	test_caeser(txt)
-	print(sentence)
-	print(jumble_words(sentence))
+	print('sentence : ' + sentence)
+	print('jumbled  : ' + jumble_words(sentence))
 
 
 def test_base64(msg):
 	bin = txt2bin(msg)
-	print('encoding base 64 : ' + msg + '\nbin = ' + bin)
+	print('encode64 : ' + msg )
+	print('binary   : ' + bin)
 	reCoded = bin2txt(bin)
-	print('decoding base 64 : ' + reCoded)
+	print('decode64 : ' + reCoded)
 
 def test_caeser(txt):
-	print(sys.version[0:2])
-	if sys.version[0:2] == '2.':
-		print(caesar(txt, 0))
-		print(caesar(txt, 1))
-		print(caesar(txt, 2))
-	else:
-		print('Running alternate caeser function Python 3.3')
-		for i in range(0,27):
+	for i in range(0,3):
+		if sys.version[0:2] == '2.':
+			res = caesar(txt, 0)
+		else:   # Running alternate caeser function Python 3.3
 			res = caeser2(txt, i)
-			print(res)
+		print('caeser   : ' + txt + ' shifted ' + str(i) + ' = ' + res)
 	
 def test_crypto(msg):
 	try:
@@ -68,13 +70,25 @@ def test_crypto(msg):
 		print('encryption test failed')
 
 	
-def encode64(visible_text): return base64.b64encode(bytes(visible_text, 'utf-8')).decode('utf-8')  # requires Python 3.3
-def decode64(poorly_hidden_text): return base64.b64decode(poorly_hidden_text).decode('utf-8')
-def reverse(txt): return txt[::-1]  # http://stackoverflow.com/questions/931092/reverse-a-string-in-python
-def reverse_slow(txt): return ''.join(reversed(txt))
+def encode64(visible_text): 
+	""" encodes a string to base 64 - not encryption but handy for hiding text from shoulder surfing  """
+	return base64.b64encode(bytes(visible_text, 'utf-8')).decode('utf-8') 
+	
+def decode64(poorly_hidden_text): 
+	""" decodes base 64 string to clear text   """
+	return base64.b64decode(poorly_hidden_text).decode('utf-8')
+	
+def reverse(txt): 
+	""" reverses all letters in a string """
+	return txt[::-1] 
+	
+def reverse_slow(txt): 
+	""" reverses all letters in a string - slower method """
+	return ''.join(reversed(txt))
 
 
 def jumble_words(txt):
+	""" takes a sentence and randomly shuffles the word positions """
 	words = txt.split(' ')
 	for i in range(0,200):
 		pos1 = random.randint(0, len(words)-1)
@@ -84,14 +98,15 @@ def jumble_words(txt):
 
 
 def caesar(msg, shift):
-	# requires Python 2.7
+	""" caeser cipher jumbles text by bit shifting -  requires Python 2.7 """
 	letters = string.ascii_lowercase
 	shuffled = letters[shift:] + letters[:shift]
-	table = string.maketrans(letters, shuffled)  # string.
+	table = string.maketrans(letters, shuffled) 
 	return msg.translate(table)
 
 	
 def caeser2(msg, shift):
+	""" caeser cipher jumbles text by bit shifting - longer version """
 	cipherText = ""
 	for ch in msg:
 		if ch.isalpha():
@@ -113,24 +128,28 @@ def decrypt_AEX(key, ciphertext, IV456):
 	
 	
 def txt2bin(txt): 
-	#The code expects ascii characters in range: [ -~]
+	""" convert text to binary string - The code expects ascii characters in range: [ -~] """
 	return bin(int(binascii.hexlify(txt.encode('ascii', 'strict')), 16))
 
 def bin2txt(bin):
+	""" convert binary string to text """
 	n = int(bin, 2)
 	return n.to_bytes((n.bit_length() + 7) // 8, 'big').decode()	
 
 
 def test_full_range():
+	""" lists the ASCII characters - currently buggy after 128 """
 	for i in range(0, 128):
 		char = chr(i)
 		print(str(i) + '  ' + char + ' ' + txt2bin(char))
 
 def pprint_binary(txt):
+	""" splits a binary string starting with 0b into a nice 2 x 4 digit display"""
 	op = txt[2:].zfill(7)
 	return op[:4] + '-' + op[4:]
 		
 def ASCII_chart():
+	""" print an ASCII chart to chr(128) - bug where rows and cols showing the wrong way"""
 	rows = 32
 	cols = 4
 	chars = []
