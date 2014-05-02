@@ -13,7 +13,7 @@ def TEST():
     print(" ------------------------------ ")
     tmpFile = "list_of_files.csv"
     fl = GetFileList([os.getcwd()], ['*.py'], ["__pycache__", ".git"], True)
-    SaveFileList(fl, tmpFile, ["name", "path", "size", "date"])
+    SaveFileList(fl, tmpFile, ["fullFilename", "name", "path", "size", "date"])
     net.FormatCsvAsHtml(tmpFile, tmpFile + ".html")
     LaunchFile(tmpFile + ".html")
     return tmpFile
@@ -131,7 +131,14 @@ def LoadFileToList(fname):
     f = open(fname, 'r')
     l = f.read()
     return l
-            
+ 
+def load_file_to_list(fname):
+	lst = []
+	with open(fname, 'r') as f:
+		for line in f:
+			lst.append(line) 
+	return lst
+
 def LoadFileToDict(fname):
 	d = {}
 	with open(fname) as f:
@@ -279,6 +286,21 @@ def SaveFileList(filelist, opFile, opFormat, delim=',', qu='"'):
             #print(line)
         print ("Finished saving " , opFile)
 
+		
+def get_file_info(f, opFormat, delim=',', qu='"'):
+	line = ''
+	for fld in opFormat:
+		if fld == "fullFilename":
+			line = line + qu + f + qu + delim
+		if fld == "name":
+			line = line + qu + os.path.basename(f) + qu + delim
+		if fld == "date":
+			line = line + qu + GetDateAsString(os.path.getmtime(f)) + qu + delim # str(datetime.fromtimestamp(modifiedTime).strftime("%Y%m%b %H:%M:%S"))
+		if fld == "size":
+			line = line + qu + str(os.path.getsize(f)) + qu + delim
+		if fld == "path":
+			line = line + qu + os.path.dirname(f) + qu + delim
+	return line
 
 def ExtractHeader(f):
 	rows = []
