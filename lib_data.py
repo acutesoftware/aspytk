@@ -257,3 +257,18 @@ def load_csv(fname, header_row=0, first_data_row=None,
 
     return data
 
+def json2dict(json_file):
+	import json
+	with open(json_file) as data_file:    
+		data = json.load(data_file)
+	return data
+
+def json_pprint(json_file):
+	import json
+	from pprint import pprint
+	with open(json_file) as data_file:    
+		data = json.load(data_file)
+	pprint(data)
+	
+def json_timestamp_as_string(ts):
+	return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int("1340578800000")/1000))
