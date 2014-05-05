@@ -7,16 +7,18 @@ import sys
 import collections
 import random
 import re
+import time
 
 def TEST():
-    print(" \n --- Testing Data functions --- ")
-    print(" ------------------------------ ")
-    print("Basic Text hiding (not encryption)")
-    visible_text = 'password'
-    poorly_hidden_text = encode(visible_text)  #
-    print("Visible text  = ", visible_text)
-    print("'hidden' text = ", poorly_hidden_text)
-    print("Restored text = ", decode(poorly_hidden_text) )
+	print(" \n --- Testing Data functions --- ")
+	print(" ------------------------------ ")
+	print("Basic Text hiding (not encryption)")
+	visible_text = 'password'
+	poorly_hidden_text = encode(visible_text)  #
+	print("Visible text  = ", visible_text)
+	print("'hidden' text = ", poorly_hidden_text)
+	print("Restored text = ", decode(poorly_hidden_text) )
+	print("json time string : 1340578800000" , json_timestamp_as_string("1340578800000"))
 
 def dict2list(dct, keylist): return [dct[i] for i in keylist]
 def list2dict(L, keylist): return {k:v for (k,v) in zip(keylist, L)}
@@ -271,4 +273,8 @@ def json_pprint(json_file):
 	pprint(data)
 	
 def json_timestamp_as_string(ts):
-	return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int("1340578800000")/1000))
+	return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(ts)/1000))
+
+	
+	
+TEST()
