@@ -275,6 +275,37 @@ def json_pprint(json_file):
 def json_timestamp_as_string(ts):
 	return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(ts)/1000))
 
-	
+def dict_summary(dict):
+	""" get a unique list of keys from a dictionary """
+	keys = []
+	for key, value in dict.items():
+		#print key, value
+		keys.append(key)
+	uniq = set(keys)
+	print (uniq)
+	return uniq
+
+def dict_extract(dict, keyList):
+	""" extract keys and values for subset based on passed list of key words """
+	result = []
+	for key, value in dict.items():
+		if key in keyList:
+			result.append([key, value])
+	#print (result)
+	return result
+
+
+def dict_flatten(d, parent_key=''):
+	""" flatten a dictionary - from 
+	http://stackoverflow.com/questions/6027558/flatten-nested-python-dictionaries-compressing-keys
+	"""
+	items = []
+	for k, v in d.items():
+		new_key = parent_key + '_' + k if parent_key else k
+		if isinstance(v, collections.MutableMapping):
+			items.extend(dict_flatten(v, new_key).items())
+		else:
+			items.append((new_key, v))
+	return dict(items)
 	
 TEST()
