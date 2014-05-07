@@ -5,6 +5,8 @@ import base64
 import csv
 import sys
 import collections
+from collections import Counter
+import operator
 import random
 import re
 import time
@@ -19,6 +21,9 @@ def TEST():
 	print("'hidden' text = ", poorly_hidden_text)
 	print("Restored text = ", decode(poorly_hidden_text) )
 	print("json time string : 1340578800000" , json_timestamp_as_string("1340578800000"))
+	words = ['a', 'a', 'b', 'c', 'a', 'a', 'c', 'a', 'b']
+	print("words = ", words)
+	print("counts= ", saveListWithCounts(words))
 
 def dict2list(dct, keylist): return [dct[i] for i in keylist]
 def list2dict(L, keylist): return {k:v for (k,v) in zip(keylist, L)}
@@ -152,7 +157,20 @@ def split_CSV_by_Column_Values(ipFile, colName):
 			#print("Appending to ", opName)
 			addSampleData(opName, row)
 
+def saveListWithCounts(lst):
+	""" takes a list of strings and counts unique values """
+	counts = Counter( sorted(lst) )
+	sortedList = sorted(counts.items(), key=operator.itemgetter(0))
+	return sortedList
 
+def multi_split(line, split_chars):
+	res = [line]
+	for sep in split_chars:
+		line, res = res, []
+		for seq in line:
+			res += seq.split(sep)
+	return res
+			
 def countLinesInFile(fname):
     with open(fname) as f:
         for i, l in enumerate(f):
@@ -308,4 +326,4 @@ def dict_flatten(d, parent_key=''):
 			items.append((new_key, v))
 	return dict(items)
 	
-TEST()
+#TEST()
