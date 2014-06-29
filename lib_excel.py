@@ -2,7 +2,7 @@
 
 # lib_excel.py		written by Duncan Murray  11/2/2014
 
-import xlrd
+
 import csv
 import os
 import sys
@@ -11,6 +11,8 @@ import glob
 from random import randint
 
 import collections
+
+import xlrd
 
 fldr = os.getcwd() + '//..//aspytk'
 print('startup folder = ' + fldr)

@@ -262,7 +262,7 @@ def SaveFileList(filelist, opFile, opFormat, delim=',', qu='"'):
     # written by Duncan Murray 7/8/2013 (C) Acute Software
     # uses a List of files and collects meta data on them and saves 
     # to an text file as a list or with metadata depending on opFormat.
-    with open(opFile,'w', encoding='utf-8') as fout:
+    with open(opFile,'w') as fout:
         #Print header
         fout.write("fullFilename" + delim)
         for colHeading in opFormat:

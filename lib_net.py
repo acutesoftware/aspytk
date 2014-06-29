@@ -2,7 +2,11 @@
 # utility functions for HTML work, mainly from udacity course
 
 import csv
-import urllib.request
+try:
+	import urllib.request as request
+except:
+	import urllib2 as request
+	
 import getpass
 import socket
 
@@ -26,7 +30,7 @@ def GetHostName():
 	
 def DownloadFile(url, filename):
 	output = open(filename,'wb')
-	output.write(urllib.request.urlopen(url).read())
+	output.write(request.urlopen(url).read())
 	output.close()
 	
 def CreateCssString(fontFamily, baseFontSize, linefeed='\n'):
