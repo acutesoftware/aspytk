@@ -51,8 +51,8 @@ except:
 	from bs4 import BeautifulSoup
     
 source_folder = 'S:\\DATA\\BACKUP\\_WK\\site2015_dl'
-html_folder = 'T:\\user\\dev\\src\\python\\acuteweb\\deploy\\'
-img_folder = 'T:\\user\\dev\\src\\python\\acuteweb\\deploy\\img\\'
+html_folder   = 'T:\\user\\dev\\src\\python\\acuteweb\\deploy\\'
+img_folder    = 'T:\\user\\dev\\src\\python\\acuteweb\\deploy\\img\\'
 
 
 
@@ -65,9 +65,63 @@ def main():
     with open('pages.csv', 'r') as flist:
         for line in flist:
             cols = line.split(',')
-            create_html_page(cols[0], cols[1], cols[2].strip('\n'))
+            content = create_html_page(cols[0], cols[1], cols[2].strip('\n'))
+            pages.append([cols[0], cols[1], cols[2].strip('\n'), content])
     print("Done making " + str(len(pages)))
+    make_index_pages(pages)
+    
 
+def make_index_pages(pages):
+    f_ndx = open(html_folder + 'index.html', 'w')
+    f_p2  = open(html_folder + 'page2.html', 'w')
+    f_p3  = open(html_folder + 'page3.html', 'w')
+
+    f_ndx.write(BuildHTMLHeader('Welcome', linefeed='\n', border='1') + '<TABLE valign=top align=center border=0>')
+    f_p2.write(BuildHTMLHeader('Page 2', linefeed='\n', border='1') + '<TABLE valign=top align=center border=0>')
+    f_p3.write(BuildHTMLHeader('Page 3', linefeed='\n', border='1') + '<TABLE valign=top align=center border=0>')
+    
+    for art in pages:
+        #print('art = ', art)
+        txt = ''
+        nice_name = art[2].replace('_', ' ').replace('-', ' ').title()
+        if art[0] == 'index':
+            f_ndx.write('<TR><TD><H2>' + nice_name + '</H2>\n')
+            f_ndx.write(art[3][0:800])
+            if len(art[3]) > 800:
+                f_ndx.write('<BR><BR><a href="' + art[2] + '.html">Read more...<a/><BR><BR>\n\n')
+            else:
+                f_ndx.write('<BR><BR><BR><BR>\n\n')
+            f_ndx.write('</TD></TR>')
+            
+        if art[0] == 'page2':
+            f_p2.write('<TR><TD><H2>' + nice_name + '</H2>\n')
+            f_p2.write(art[3][0:800])
+            if len(art[3]) > 800:
+                f_p2.write('<BR><BR><a href="' + art[2] + '.html">Read more...<a/><BR><BR>\n\n')
+            else:
+                f_p2.write('<BR><BR><BR><BR>\n\n')
+            f_p2.write('</TD></TR>')
+
+        if art[0] == 'page3':
+            f_p3.write('<TR><TD><H2>' + nice_name + '</H2>\n')
+            f_p3.write(art[3][0:800])
+            if len(art[3]) > 800:
+                f_p3.write('<BR><BR><a href="' + art[2] + '.html">Read more...<a/><BR><BR>\n\n')
+            else:
+                f_p3.write('<BR><BR><BR><BR>\n\n')
+            f_p3.write('</TD></TR>')
+
+    print("\n\nart[0] = " + art[0])    
+    f_ndx.write( '</TABLE>' + BuildHTMLFooter('index'))
+    f_p2.write( '</TABLE>' + BuildHTMLFooter('page2'))
+    f_p3.write( '</TABLE>' + BuildHTMLFooter('page3'))
+    
+    
+    f_ndx.close()
+    f_p2.close()
+    f_p3.close()
+
+    
 def create_html_page(ndx, cat, art):
     fname = html_folder + art + '.html'
     nice_name = art.replace('_', ' ').replace('-', ' ').title()
@@ -77,12 +131,14 @@ def create_html_page(ndx, cat, art):
         
         
         with open (source_folder + '\\' + art + '.html', "r") as myfile:
-            web_text=myfile.read().replace('\n', '')        
+            web_text=myfile.read().replace('\n', '').replace('src="./' + art + '_files/', 'src="./img/').replace('<a href="http://www.cloudeddesigns.com/pics/', '<a href="img/')       
          
         p_html, p_txt = ExtractContent(web_text, 'field-items')
-        f.write(p_html.replace('src="./' + art + '_files/', 'src="./img/'))
+ #       f.write(p_html.replace('src="./' + art + '_files/', 'src="./img/'))
+        f.write(p_html)
         
         f.write(BuildHTMLFooter(ndx))
+        return p_html
 
 def ExtractContent(rawText, divID):
     html = ''
@@ -97,7 +153,7 @@ def ExtractContent(rawText, divID):
     old = ''
     new = ''
     for line in results.contents:
-        tmp = str(line).replace('<a href="http://cloudeddesigns.com/pics/', '<a href="img/') + '\n'
+        tmp = str(line) + '\n'
         old, new = rename_node(tmp)
         html += tmp.replace(old, new)
     return html, txt
@@ -121,7 +177,8 @@ def rename_node(txt):
         print('\n\np1 = ', p1, 'p2 = ', p2, 'p3 = ', p3, '\n')
         print('renaming \n' + old_url + ' \n' + new_url)
         return old_url, new_url
-    return '', ''
+    return txt, txt
+    
 def collect_source_file_list():
     """
     S:\DATA\BACKUP\_WK\site2015_dl\idea_super_stick.html
@@ -165,7 +222,7 @@ def escape_html(s):
 
 def BuildHTMLHeader(title, linefeed='\n', border='1'):
     res = "<HTML><HEAD><title>" + linefeed
-    res += title + "</title>" + linefeed
+    res += title + " | Clouded Designs</title>" + linefeed
     #res = res + "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + linefeed
     res += CreateCssString("Arial", "12pt", linefeed ) + linefeed
     res += '</HEAD><BODY><img src = "img/banner-v03b.jpg" width="100%">'
@@ -183,12 +240,14 @@ def BuildHTMLHeader(title, linefeed='\n', border='1'):
     
 def BuildHTMLFooter(ndx, linefeed='\n', border='1'):
     res = linefeed
+   # print('IN FOOTER = ndx = ' + ndx)
+    
     if ndx == 'index':
-        res += '1 <a href="page2.html">2</a>  <href="page3.html">3</a>'  
+        res += '<BR><BR>1, <a href="page2.html">2</a>,  <a href="page3.html">3</a><BR><BR>'  
     elif ndx == 'page2':
-        res += '<a href="index.html">1</a> 2 <href="page3.html">3</a>'  
+        res += '<BR><BR><a href="index.html">1</a>, 2 <a href="page3.html">3</a><BR><BR>'  
     elif ndx == 'page3':
-        res += '<a href="index.html">1</a> <href="page2.html">2</a>  3'  
+        res += '<BR><BR><a href="index.html">1</a>, <a href="page2.html">2</a>  3<BR><BR>'  
     res += "(C) Acute Software 2011 - 2015"
     res += "</body></HTML>" + linefeed
     return res
